@@ -1,5 +1,12 @@
 function stacks(){
-    cc(isValid("()[]{}"));
+    //cc(isValid("()[]{}"));
+
+    let stack = new MinStack();
+    stack.createStack([4, 3, 2, 4, 4]);
+    stack.pop(1);
+    stack.push(8);
+    cc(stack.top());
+    cc(stack.getMin());
 }
 
 function isValid(str){
@@ -36,23 +43,45 @@ function isValid(str){
 }
 
 class MinStack{
-    constructor(stack) {
-        this.stack = stack;
+    constructor(){
+        this.stack = null;
+        this.min = null;
+    }
+
+    createStack(vals){
+        this.addToStacks(vals);
     }
 
     push(val){
-
+        this.addToStacks([val]);
     }
 
     pop(count){
-
+        for (let i = 0; i < count; i++){
+            this.stack = this.stack.prev;
+            this.min = this.min.prev;
+        }
     }
 
     top(){
-
+        return this.stack.data;
     }
 
     getMin(){
+        return this.min.data;
+    }
 
+    addToStacks(val){
+        for (let entry of val){
+            let temp = this.stack;
+            this.stack = {};
+            this.stack.data = entry;
+            this.stack.prev = temp;
+
+            let tempMin = this.min;
+            this.min = {};
+            (tempMin?.data && entry > tempMin.data) ? this.min.data = tempMin.data : this.min.data = entry;
+            this.min.prev = tempMin;
+        }
     }
 }
