@@ -5,8 +5,12 @@ function stacks(){
     stack.createStack([4, 3, 2, 4, 4]);
     stack.pop(1);
     stack.push(8);
-    cc(stack.top());
-    cc(stack.getMin());
+    /*cc(stack.top());
+    cc(stack.getMin());*/
+
+    evalRPM = new MinStack();
+    evalRPM.calculateRPN(["2","1","+","3","*"]);
+    cc(evalRPM)
 }
 
 function isValid(str){
@@ -42,46 +46,3 @@ function isValid(str){
         return !failure;
 }
 
-class MinStack{
-    constructor(){
-        this.stack = null;
-        this.min = null;
-    }
-
-    createStack(vals){
-        this.addToStacks(vals);
-    }
-
-    push(val){
-        this.addToStacks([val]);
-    }
-
-    pop(count){
-        for (let i = 0; i < count; i++){
-            this.stack = this.stack.prev;
-            this.min = this.min.prev;
-        }
-    }
-
-    top(){
-        return this.stack.data;
-    }
-
-    getMin(){
-        return this.min.data;
-    }
-
-    addToStacks(val){
-        for (let entry of val){
-            let temp = this.stack;
-            this.stack = {};
-            this.stack.data = entry;
-            this.stack.prev = temp;
-
-            let tempMin = this.min;
-            this.min = {};
-            (tempMin?.data && entry > tempMin.data) ? this.min.data = tempMin.data : this.min.data = entry;
-            this.min.prev = tempMin;
-        }
-    }
-}
