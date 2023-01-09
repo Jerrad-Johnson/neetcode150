@@ -55,8 +55,8 @@ function generateParentheses(n = 3){
     let openParentheses = 0;
     let closedParentheses = 0;
 
-    let resultL = recursion(0, n+1, arr, openParentheses, closedParentheses, originalN);
-    let resultR = recursion(1, n+1, arr, openParentheses, closedParentheses, originalN);
+    let resultL = recursion(0, n, arr, openParentheses, closedParentheses, originalN);
+    let resultR = recursion(1, n, arr, openParentheses, closedParentheses, originalN);
     cc(resultL)
 
     function recursion(pref, n, arr, openParentheses, closedParentheses, originalN){
@@ -71,13 +71,16 @@ function generateParentheses(n = 3){
         } else if (openParentheses === closedParentheses){
             arr.push("(");
             openParentheses++;
+        } else if (openParentheses === originalN && closedParentheses !== originalN) {
+            arr.push(")");
+            closedParentheses++;
         } else if (openParentheses === originalN && closedParentheses == originalN){
             return arr;
         }
+        if (n === 0) cc(n)
         if (n === 0) return arr;
 
-        let left = recursion(0, n, arr, openParentheses, closedParentheses, originalN);
-        let right = recursion(1, n, arr, openParentheses, closedParentheses, originalN);
+        return (recursion(0, n, arr, openParentheses, closedParentheses, originalN), recursion(1, n, arr, openParentheses, closedParentheses, originalN));
     }
 }
 
