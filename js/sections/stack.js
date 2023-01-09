@@ -12,7 +12,7 @@ function stacks(){
     evalRPM.calculateRPN(["2","1","+","3","*"]);
     //cc(evalRPM)
 
-    generateParentheses(2);
+    generateParentheses(3);
 }
 
 function isValid(str){
@@ -49,39 +49,30 @@ function isValid(str){
 }
 
 function generateParentheses(n = 3){
-    let originalN = n;
-    n *= n;
-    let arr = [];
-    let openParentheses = 0;
-    let closedParentheses = 0;
+    let stack = [];
+    let res = [];
+    recursion(0, 0);
 
-    let resultL = recursion(0, n, arr, openParentheses, closedParentheses, originalN);
-    let resultR = recursion(1, n, arr, openParentheses, closedParentheses, originalN);
-    cc(resultL)
-
-    function recursion(pref, n, arr, openParentheses, closedParentheses, originalN){
-        arr = [...arr];
-        n--;
-        if (openParentheses < originalN && pref === 0){
-            arr.push("(");
-            openParentheses++;
-        } else if (openParentheses > closedParentheses && pref === 1){
-            arr.push(")");
-            closedParentheses++;
-        } else if (openParentheses === closedParentheses){
-            arr.push("(");
-            openParentheses++;
-        } else if (openParentheses === originalN && closedParentheses !== originalN) {
-            arr.push(")");
-            closedParentheses++;
-        } else if (openParentheses === originalN && closedParentheses == originalN){
-            return arr;
+    function recursion(openN, closedN){
+        if (openN === closedN && closedN === n){
+            res.push([...stack]);
+            return;
         }
-        if (n === 0) cc(n)
-        if (n === 0) return arr;
 
-        return (recursion(0, n, arr, openParentheses, closedParentheses, originalN), recursion(1, n, arr, openParentheses, closedParentheses, originalN));
+        if (openN < n){
+            stack.push("(");
+            recursion(openN + 1, closedN);
+            stack.pop();
+        }
+
+        if (closedN < openN){
+            stack.push(")");
+            recursion(openN, closedN + 1);
+            stack.pop();
+        }
     }
+
+    return res;
 }
 
 
