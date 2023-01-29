@@ -41,7 +41,7 @@ function searchV2(nums, target){ // Passed 30 testcases.
     return -1;
 }
 
-cc(search([-1,0,3,5,9,12], 2));
+//cc(search([-1,0,3,5,9,12], 2));
 function search(nums, target){
     if (nums.length === 0) return -1;
     if (nums[0] === target) return 0;
@@ -63,6 +63,49 @@ function search(nums, target){
             index = index - Math.ceil((right - left) / 2);
         }
 
+    }
+
+    return result;
+}
+
+cc(searchMatrix([[1,3,5,7],[10,11,16,20],[23,30,34,60]], 13));
+function searchMatrix(matrix, target){
+    let rightTopPointer = matrix.length-1;
+    let leftTopPointer = 0;
+    let topIndex = Math.floor(rightTopPointer/2);
+
+    for (let interval = 0; interval < 300; interval++){
+        if (matrix[topIndex][0] > target){
+            rightTopPointer = topIndex;
+            topIndex = Math.ceil((leftTopPointer - topIndex) /2);
+        } else if (matrix[topIndex][matrix[topIndex].length-1] < target){
+            leftTopPointer = topIndex;
+            topIndex = Math.floor((rightTopPointer - topIndex) /2);
+        } else {
+            break;
+        }
+    }
+
+    let subArray = matrix[topIndex];
+    let result = false;
+    let left = 0;
+    let right = subArray.length-1;
+    let index = Math.floor((subArray.length-1)/2);
+    let limiter = 0;
+
+    while (true) {
+        if (limiter === 3000) break;
+        limiter++;
+        if (target === subArray[index]) { result = true; break; }
+        if (target > subArray[index]) {
+            if (left === right) break;
+            left = index;
+            index = index + Math.ceil((right - left) / 2);
+        } else if (target < subArray[index]) {
+            if (index === right) break;
+            right = index;
+            index = index - Math.ceil((right - left) / 2);
+        }
     }
 
     return result;
