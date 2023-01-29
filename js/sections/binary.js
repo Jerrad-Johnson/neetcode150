@@ -41,8 +41,29 @@ function searchV2(nums, target){ // Passed 30 testcases.
     return -1;
 }
 
+cc(search([-1,0,3,5,9,12], 2));
 function search(nums, target){
     if (nums.length === 0) return -1;
+    if (nums[0] === target) return 0;
+    if (nums[1] === target) return 1;
+    let result = -1;
+    let left = 0;
+    let right = nums.length-1;
+    let index = Math.floor((nums.length-1)/2);
 
-    return -1;
+    while (true) {
+        if (target === nums[index]) { result = index; break; }
+        if (target > nums[index]) {
+            if (left === right) break;
+            left = index;
+            index = index + Math.ceil((right - left) / 2);
+        } else if (target < nums[index]) {
+            if (index === right) break;
+            right = index;
+            index = index - Math.ceil((right - left) / 2);
+        }
+
+    }
+
+    return result;
 }
