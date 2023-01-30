@@ -62,13 +62,12 @@ function search(nums, target){
             right = index;
             index = index - Math.ceil((right - left) / 2);
         }
-
     }
 
     return result;
 }
 
-cc(searchMatrix([[1,3,5,7],[10,11,16,20],[23,30,34,60]], 3));
+//cc(searchMatrix([[1],[3],[5]], 2));
 function searchMatrix(matrix, target){
     let rightTopPointer = matrix.length-1;
     let leftTopPointer = 0;
@@ -77,12 +76,13 @@ function searchMatrix(matrix, target){
     if (matrix.length < 3){
         matrixIsShort = true;
         if (Array.isArray(matrix[1]) && target >= matrix[1][0] && target <= matrix[1][matrix[1].length-1]){
-            topIndex = 1;
+            topIndex = 1; // Because the default is 0, I do not need to check matrix[0].
         }
     }
 
-    for (let interval = 0; interval < 5; interval++){
+    for (;;){
         if (matrixIsShort) break;
+        if (rightTopPointer === topIndex || leftTopPointer === topIndex) break;
         if (matrix[topIndex][0] > target){
             rightTopPointer = topIndex;
             topIndex = topIndex + Math.floor((leftTopPointer - topIndex) /2);
@@ -94,18 +94,14 @@ function searchMatrix(matrix, target){
         }
     }
 
-
     let subArray = matrix[topIndex];
     if (subArray[0] === target) return true;
     let result = false;
     let left = 0;
     let right = subArray.length-1;
     let index = Math.floor((subArray.length-1)/2);
-    let limiter = 0;
 
     while (true) {
-        if (limiter === 3000) break;
-        limiter++;
         if (target === subArray[index]) { result = true; break; }
         if (target > subArray[index]) {
             if (left === right) break;
@@ -120,3 +116,73 @@ function searchMatrix(matrix, target){
 
     return result;
 }
+
+cc(minEatingSpeed([3,6,7,11], 8));
+function minEatingSpeed(piles, h){
+    let max = Math.max(...piles);
+    if (h === max) return max;
+    let totalBananas = piles.reduce((curr, prev) => {return curr + prev});
+    let initialMinimum = Math.ceil(totalBananas / h);
+    let range = [];
+
+    for (let i = initialMinimum; i < max +1; i++){
+        range.push(i);
+    }
+
+    let limiter = 0;
+    let left = 0;
+    let right = range.length-1;
+    let index = Math.floor(right/2);
+    let possibleSolutions = [];
+
+    let result = testThisPile([3,6,7,11]);
+
+    if (result !== -1) possibleSolutions.push(result);
+
+    cc(result);
+
+    function testThisPile(pile){
+        let possibleSolution = -1;
+
+        outer:
+        while (true){
+            if (limiter === 1) break;
+            limiter++;
+            let hoursSpent = 0;
+
+            for (let i = 0; i < pile.length; i++){
+                let rate = range[index];
+                let limiter2 = 0;
+
+                while (true){
+                    if (hoursSpent === h) break outer;
+                    if (limiter2 === 10) break;
+                    limiter2++;
+
+                    pile[i] = (pile[i] - rate);
+                    hoursSpent++;
+
+                    if (pile[pile.length-1] <= 0){
+                        possibleSolution = rate;
+                        break outer;
+                    }
+
+                    if (pile[i] <= 0) break;
+                }
+            }
+        }
+
+        return possibleSolution;
+    }
+
+
+
+}
+
+
+
+findMedianSortedArrays([1,3], [2])
+function findMedianSortedArrays(nums1, nums2){
+
+}
+
