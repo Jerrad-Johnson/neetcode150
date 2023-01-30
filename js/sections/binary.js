@@ -117,10 +117,11 @@ function searchMatrix(matrix, target){
     return result;
 }
 
-cc(minEatingSpeed([3,6,7,11], 8));
+cc(minEatingSpeed([312884470], 312884469));
 function minEatingSpeed(piles, h){
+    if (piles.length === 1)return Math.ceil(piles[0] / h);
     let max = Math.max(...piles);
-    if (h === max) return max;
+    if (h === max || h === piles.length) return max;
     let totalBananas = piles.reduce((curr, prev) => {return curr + prev});
     let initialMinimum = Math.ceil(totalBananas / h);
     let range = [];
@@ -135,48 +136,48 @@ function minEatingSpeed(piles, h){
     let index = Math.floor(right/2);
     let possibleSolutions = [];
 
-    let result = testThisPile([3,6,7,11]);
 
-    if (result !== -1) possibleSolutions.push(result);
+    while (true) {
+        let result = testThisRate(piles);
 
-    cc(result);
+        if (result === -1){
+            if (left === right) break;
+            left = index;
+            index = index + Math.ceil((right - left) / 2);
+        } else {
+            possibleSolutions.push(result);
+            if (index === right) break;
+            right = index;
+            index = index - Math.ceil((right - left) / 2);
+        }
+    }
 
-    function testThisPile(pile){
+    function testThisRate(pile){
         let possibleSolution = -1;
+        let hoursSpent = 0;
+        let pileCopy = [...pile];
 
         outer:
-        while (true){
-            if (limiter === 1) break;
-            limiter++;
-            let hoursSpent = 0;
+        for (let i = 0; i < pile.length; i++){
+            let rate = range[index];
 
-            for (let i = 0; i < pile.length; i++){
-                let rate = range[index];
-                let limiter2 = 0;
+            while (true){
+                if (hoursSpent === h) break outer;
+                pileCopy[i] = (pileCopy[i] - rate);
+                hoursSpent++;
 
-                while (true){
-                    if (hoursSpent === h) break outer;
-                    if (limiter2 === 10) break;
-                    limiter2++;
-
-                    pile[i] = (pile[i] - rate);
-                    hoursSpent++;
-
-                    if (pile[pile.length-1] <= 0){
-                        possibleSolution = rate;
-                        break outer;
-                    }
-
-                    if (pile[i] <= 0) break;
+                if (pileCopy[pileCopy.length-1] <= 0){
+                    possibleSolution = rate;
+                    break outer;
                 }
+
+                if (pileCopy[i] <= 0) break;
             }
         }
-
         return possibleSolution;
     }
 
-
-
+    return Math.min(...possibleSolutions);
 }
 
 
