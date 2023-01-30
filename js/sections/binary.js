@@ -179,7 +179,7 @@ function minEatingSpeed(piles, h){
     return Math.min(...possibleSolutions);
 }
 
-cc(findMin([3, 4, 1, 2, 3]));
+cc(findMin([11,13,15,17]));
 function findMin(nums){
     let left = 0;
     let right = nums.length-1;
@@ -196,10 +196,12 @@ function findMin(nums){
             left = index;
             index = Math.ceil(index + ((right - index) / 2));
             if (right === index){ lastL = left, lastR = right; break; }
+        } else {
+            return nums[0];
         }
     }
-    cc(lastL, lastR)
 
+    return nums[lastR];
 }
 
 
