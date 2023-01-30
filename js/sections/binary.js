@@ -117,7 +117,7 @@ function searchMatrix(matrix, target){
     return result;
 }
 
-cc(minEatingSpeed([312884470], 312884469));
+//cc(minEatingSpeed([312884470], 312884469)); // Partially works, but Neetcode led me astray and I don't want to recreate it. Uses too much memory.
 function minEatingSpeed(piles, h){
     if (piles.length === 1)return Math.ceil(piles[0] / h);
     let max = Math.max(...piles);
@@ -130,7 +130,6 @@ function minEatingSpeed(piles, h){
         range.push(i);
     }
 
-    let limiter = 0;
     let left = 0;
     let right = range.length-1;
     let index = Math.floor(right/2);
@@ -180,6 +179,28 @@ function minEatingSpeed(piles, h){
     return Math.min(...possibleSolutions);
 }
 
+cc(findMin([3, 4, 1, 2, 3]));
+function findMin(nums){
+    let left = 0;
+    let right = nums.length-1;
+    let index = Math.ceil((right - left) /2);
+    let lastR = -1;
+    let lastL = -1;
+
+    for (let limiter = 0; limiter < 50; limiter++){
+        if (nums[left] > nums[index]){
+            right = index;
+            index = Math.floor(index - ((index - left) / 2));
+            if (left === index){ lastL = left, lastR = right; break; }
+        } else if (nums[right] < nums[index]){
+            left = index;
+            index = Math.ceil(index + ((right - index) / 2));
+            if (right === index){ lastL = left, lastR = right; break; }
+        }
+    }
+    cc(lastL, lastR)
+
+}
 
 
 findMedianSortedArrays([1,3], [2])
