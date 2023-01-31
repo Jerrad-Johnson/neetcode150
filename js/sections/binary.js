@@ -42,7 +42,7 @@ function searchV2(nums, target){ // Passed 30 testcases.
 }
 
 //cc(search([-1,0,3,5,9,12], 2));
-function search(nums, target){
+/*function search(nums, target){
     if (nums.length === 0) return -1;
     if (nums[0] === target) return 0;
     if (nums[1] === target) return 1;
@@ -65,7 +65,7 @@ function search(nums, target){
     }
 
     return result;
-}
+}*/
 
 //cc(searchMatrix([[1],[3],[5]], 2));
 function searchMatrix(matrix, target){
@@ -179,7 +179,7 @@ function minEatingSpeed(piles, h){
     return Math.min(...possibleSolutions);
 }
 
-cc(findMin([11,13,15,17]));
+//cc(findMin([11,13,15,17]));
 function findMin(nums){
     let left = 0;
     let right = nums.length-1;
@@ -203,6 +203,87 @@ function findMin(nums){
 
     return nums[lastR];
 }
+
+cc(search([4,5,6,7,0,1,2], 0));
+function search(nums, target){
+    let left = 0;
+    let right = nums.length-1;
+    let index = Math.ceil((right - left) /2);
+    let lastR = -1;
+    let lastL = -1;
+
+    for (let limiter = 0; limiter < 50; limiter++){
+        if (nums[left] > nums[index]){
+            right = index;
+            index = Math.floor(index - ((index - left) / 2));
+            if (left === index){ lastL = left, lastR = right; break; }
+        } else if (nums[right] < nums[index]){
+            left = index;
+            index = Math.ceil(index + ((right - index) / 2));
+            if (right === index){ lastL = left, lastR = right; break; }
+        } else {
+            lastR = 0;
+        }
+    }
+
+    let limiter = 40;
+    let result;
+    let offset = lastR - nums.length;
+    left = convertedPosition("initialL");
+    right = convertedPosition("initialR");
+    index = Math.floor(Math.abs(-left + right));
+
+
+    let indexOffset = 0;
+    if (nums.length % 2 !== 0) indexOffset = 1;
+    index = Math.ceil((indexOffset + right - left) /2) + offset;
+
+    while (true) {
+        if (limiter === 50) break;
+        limiter++;
+
+        if (target === nums[index]) { result = index; break; }
+        if (target > nums[index]) {
+            if (left === right) break;
+            left = index;
+            index = convertedPosition("l");
+        } else if (target < nums[index]) {
+            if (index === right) break;
+            right = index;
+            cc(index);
+            index = convertedPosition("r");
+            cc(index);
+            // javascript doesn't reverse-loop search for array values when using a negative index.
+        }
+    }
+
+    function convertedPosition(direction){
+        switch (direction){
+            case "r":
+                let distance = Math.abs(index - left);
+                let privateIndex = index - Math.ceil(distance);
+                if (privateIndex < 0) return nums.length-1+privateIndex;
+                break;
+            case "l":
+                break;
+            case "initialL":
+                let tempL = offset;
+                if (tempL < 0) tempL += nums.length;
+                return tempL;
+            case "initialR":
+                let tempR = offset;
+                if (tempR < 0){
+                    tempR += nums.length-1
+                } else {
+                    tempR += -1;
+                }
+                return tempR;
+        }
+    }
+
+    return result;
+}
+
 
 
 findMedianSortedArrays([1,3], [2])
