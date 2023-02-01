@@ -5,8 +5,6 @@ class Node{
     }
 }
 
-
-
 class CreateLinkedList{
     constructor(){
         this.next = null;
@@ -16,6 +14,7 @@ class CreateLinkedList{
 
     add(value){
         if (this.val === null){ this.val = value; return; }
+
         let head = this;
         while (head.next !== null){
             head = head.next;
@@ -33,12 +32,13 @@ class CreateLinkedList{
 
 }
 
-let temp = new CreateLinkedList();
-temp.add(5);
-temp.add(7);
-temp.add(9);
-temp.add(9);
-temp.addArray([1,2,3,4]);
+reverseList([1,2,3,4,5]);
+/*
+function reverseList(head){
+    let reversedHead = [];
+    for (let i = 0, j = head.length-1; i < head.length; i++, j--){
+        reversedHead[j] = head[i];
+    }
 
-
-cc(temp);
+    return reversedHead;
+}*/
