@@ -21,7 +21,7 @@ class CreateLinkedList{
         }
 
         head.next = new Node(value);
-        length++;
+        this.length++;
     }
 
     addArray(values){
@@ -30,11 +30,42 @@ class CreateLinkedList{
         }
     }
 
+    reverseList(){
+        let prev = null,
+            curr = this,
+            limiter = 0;
+
+        while (curr !== null){
+            let next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
+    }
+
+    mergeSorted(list1, list2){
+        let length;
+        list1.length > list2.length ? length = list1.length : length = list2.length;
+
+        let newList = new CreateLinkedList();
+
+        while (list1 !== null && list2 !== null){
+            if (list1?.val <= list2?.val){
+                newList.add(list1.val);
+                list1 = list1.next;
+            } else if (list1?.val > list2?.val) {
+                newList.add(list2.val);
+                list2 = list2.next;
+            }
+        }
+        return newList;
+    }
+
 }
 
-reverseList([1,2,3,4,5]);
-/*
-function reverseList(head){
+/*function reverseList(head){
     let reversedHead = [];
     for (let i = 0, j = head.length-1; i < head.length; i++, j--){
         reversedHead[j] = head[i];
@@ -42,3 +73,23 @@ function reverseList(head){
 
     return reversedHead;
 }*/
+
+//reverseList([1,2,3,4,5]);
+function reverseList(head){
+    let newHead = new CreateLinkedList();
+    newHead.addArray(head);
+    cc(newHead.reverseList());
+}
+
+//mergeSorted([1,2,4], [1,3,4]);
+mergeSorted([0], []);
+function mergeSorted(list1, list2){
+    let nodeList1 = new CreateLinkedList();
+    nodeList1.addArray(list1);
+
+    let nodeList2 = new CreateLinkedList();
+    nodeList2.addArray(list2);
+
+    let sortedNodeList = new CreateLinkedList();
+    cc(sortedNodeList.mergeSorted(nodeList1, nodeList2));
+}
