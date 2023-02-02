@@ -68,11 +68,9 @@ class CreateLinkedList{
             currR = reversed,
             fast = forward.next,
             tempL,
-            tempR,
-            limiter = 0;
+            tempR;
 
         while (fast !== null && fast.next !== null){
-            if (limiter === 5) break; limiter++;
 
             tempL = currF.next;
             tempR = currR.next;
@@ -83,6 +81,22 @@ class CreateLinkedList{
 
             fast = fast.next.next;
         }
+        return forward;
+    }
+
+    removeNthFromEnd(n){
+        let temp = this;
+        let curr, next;
+
+        for (let i = 0; i < n-1; i++){
+            temp = temp.next;
+        }
+
+        next = temp.next.next;
+        curr = temp;
+        curr.next = next;
+
+        return this;
     }
 }
 
@@ -115,8 +129,7 @@ function mergeSorted(list1, list2){
     cc(sortedNodeList.mergeSorted(nodeList1, nodeList2));
 }
 
-reorderList([1,2,3,4,5]);
-
+//reorderList([1,2,3,4,5]);
 function reorderList(head){
     let forwardList = new CreateLinkedList();
     forwardList.addArray(head);
@@ -127,7 +140,12 @@ function reorderList(head){
 
     let reorderedList = new CreateLinkedList();
     cc(reorderedList.reorderList(forwardList, reversedList));
+}
 
-
+removeNthFromEnd([1,2,3,4,5], 2);
+function removeNthFromEnd(list, n){
+    let nodeList = new CreateLinkedList();
+    nodeList.addArray(list);
+    nodeList.removeNthFromEnd(n);
 }
 
