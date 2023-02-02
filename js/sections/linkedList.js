@@ -63,6 +63,27 @@ class CreateLinkedList{
         return newList;
     }
 
+    reorderList(forward, reversed){
+        let currF = forward,
+            currR = reversed,
+            fast = forward.next,
+            tempL,
+            tempR,
+            limiter = 0;
+
+        while (fast !== null && fast.next !== null){
+            if (limiter === 5) break; limiter++;
+
+            tempL = currF.next;
+            tempR = currR.next;
+            currF.next = currR;
+            currR.next = tempL;
+            currF = currF.next.next;
+            currR = tempR;
+
+            fast = fast.next.next;
+        }
+    }
 }
 
 /*function reverseList(head){
@@ -82,7 +103,7 @@ function reverseList(head){
 }
 
 //mergeSorted([1,2,4], [1,3,4]);
-mergeSorted([0], []);
+//mergeSorted([0], []);
 function mergeSorted(list1, list2){
     let nodeList1 = new CreateLinkedList();
     nodeList1.addArray(list1);
@@ -93,3 +114,20 @@ function mergeSorted(list1, list2){
     let sortedNodeList = new CreateLinkedList();
     cc(sortedNodeList.mergeSorted(nodeList1, nodeList2));
 }
+
+reorderList([1,2,3,4,5]);
+
+function reorderList(head){
+    let forwardList = new CreateLinkedList();
+    forwardList.addArray(head);
+
+    let reversedList = new CreateLinkedList();
+    reversedList.addArray(head);
+    reversedList = reversedList.reverseList();
+
+    let reorderedList = new CreateLinkedList();
+    cc(reorderedList.reorderList(forwardList, reversedList));
+
+
+}
+
