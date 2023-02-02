@@ -119,6 +119,33 @@ class CreateLinkedList{
 
         return this;
     }
+
+    copyRandomList(){
+        let listCopy2 = {...this};
+        let listCopy = listCopy2;
+
+        let length = 0;
+        let nodes = [];
+
+        while (listCopy !== null){
+            nodes.push(listCopy);
+            listCopy = listCopy.next;
+            length++;
+        }
+
+        for (let i = 0; i < nodes.length; i++){
+            let nodeToPointTo = recursiveRandom(i, length);
+            nodes[i].randomPointer = nodes[nodeToPointTo];
+        }
+
+        function recursiveRandom(cannotBe, length){
+            let random = Math.floor(Math.random() * (length-1 - 0 + 1) + 0);
+            if (cannotBe === random) random = recursiveRandom(cannotBe, length);
+            return random;
+        }
+
+        return listCopy2;
+    }
 }
 
 /*function reverseList(head){
@@ -170,3 +197,9 @@ function removeNthFromEnd(list, n){
     nodeList.removeNthFromEnd(n);
 }
 
+copyRandomList([5, 3, 2, 1, 9, 8]);
+function copyRandomList(list){
+    let nodeList = new CreateLinkedList();
+    nodeList.addArray(list);
+    let randomPointers = nodeList.copyRandomList();
+}
