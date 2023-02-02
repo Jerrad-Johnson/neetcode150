@@ -84,7 +84,7 @@ class CreateLinkedList{
         return forward;
     }
 
-    removeNthFromEnd(n){
+    removeNth(n){
         let temp = this;
         let curr, next;
 
@@ -95,6 +95,27 @@ class CreateLinkedList{
         next = temp.next.next;
         curr = temp;
         curr.next = next;
+
+        return this;
+    }
+
+    removeNthFromEnd(n){
+        let temp = this;
+        let temp2 = this;
+        let length = 0;
+
+        while (temp !== null){
+            temp = temp.next;
+            length++;
+        }
+
+        for (let i = 0; i < length-n-1; i++){
+            temp2 = temp2.next;
+        }
+
+        let curr = temp2;
+        let newNext = curr.next.next;
+        curr.next = newNext;
 
         return this;
     }
