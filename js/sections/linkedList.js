@@ -169,6 +169,19 @@ class CreateLinkedList{
             return sum.reverse();
         }
     }
+
+    findDuplicate(){
+        let map = {};
+        let nodeCopy = this;
+
+        while (nodeCopy !== null){
+            if (map[nodeCopy.val]) return true;
+            map[nodeCopy.val] = 1;
+            nodeCopy = nodeCopy.next;
+        }
+
+        return false;
+    }
 }
 
 /*function reverseList(head){
@@ -237,4 +250,12 @@ function addTwoNumbers(l1, l2){
 
     let newList = new CreateLinkedList();
     cc(newList.addTwoNumbers(list1, list2));
+}
+
+findDuplicate([1,2,3,4,5,2])
+function findDuplicate(nums){
+    let nodes = new CreateLinkedList();
+    nodes.addArray(nums);
+
+    cc(nodes.findDuplicate());
 }
