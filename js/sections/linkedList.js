@@ -151,8 +151,11 @@ class CreateLinkedList{
         let sum1 = +getSum(list1).join(""),
             sum2 = +getSum(list2).join("");
 
+        let newSum = sum1+sum2;
+        newSum = newSum.toString().split("").reverse();
         let newList = new CreateLinkedList();
-        newList.addArray(sum1+sum2.toString().split());
+        newList.addArray(newSum);
+
         return newList;
 
         function getSum(list){
@@ -224,7 +227,7 @@ function copyRandomList(list){
     let randomPointers = nodeList.copyRandomList();
 }
 
-addTwoNumbers([2,4,3], [5,6,4]);
+addTwoNumbers([9,9,9,9,9,9,9], [9,9,9,9]);
 function addTwoNumbers(l1, l2){
     let list1 = new CreateLinkedList();
     list1.addArray(l1);
