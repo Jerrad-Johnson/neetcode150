@@ -146,6 +146,26 @@ class CreateLinkedList{
 
         return listCopy2;
     }
+
+    addTwoNumbers(list1, list2){
+        let sum1 = +getSum(list1).join(""),
+            sum2 = +getSum(list2).join("");
+
+        let newList = new CreateLinkedList();
+        newList.addArray(sum1+sum2.toString().split());
+        return newList;
+
+        function getSum(list){
+            let sum = [];
+
+            while (list !== null){
+                sum.push(list.val)
+                list = list.next;
+            }
+
+            return sum.reverse();
+        }
+    }
 }
 
 /*function reverseList(head){
@@ -190,16 +210,28 @@ function reorderList(head){
     cc(reorderedList.reorderList(forwardList, reversedList));
 }
 
-removeNthFromEnd([1,2,3,4,5], 2);
+//removeNthFromEnd([1,2,3,4,5], 2);
 function removeNthFromEnd(list, n){
     let nodeList = new CreateLinkedList();
     nodeList.addArray(list);
     nodeList.removeNthFromEnd(n);
 }
 
-copyRandomList([5, 3, 2, 1, 9, 8]);
+//copyRandomList([5, 3, 2, 1, 9, 8]);
 function copyRandomList(list){
     let nodeList = new CreateLinkedList();
     nodeList.addArray(list);
     let randomPointers = nodeList.copyRandomList();
+}
+
+addTwoNumbers([2,4,3], [5,6,4]);
+function addTwoNumbers(l1, l2){
+    let list1 = new CreateLinkedList();
+    list1.addArray(l1);
+
+    let list2 = new CreateLinkedList();
+    list2.addArray(l2);
+
+    let newList = new CreateLinkedList();
+    cc(newList.addTwoNumbers(list1, list2));
 }
