@@ -61,9 +61,20 @@ class BST{
         this.invertRecursion(root.left);
         this.invertRecursion(root.right);
     }
+
+    getDepth(){
+        let root = this.root;
+        return this.getDepthRecursion(root);
+    }
+
+    getDepthRecursion(root){
+        if (!root) return 0;
+
+        return 1 + Math.max(this.getDepthRecursion(root.left, root.right));
+    }
 }
 
 let tree = new BST;
 tree.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
 tree.invertTree();
-cc(tree);
+cc(tree.getDepth());
