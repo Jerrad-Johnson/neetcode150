@@ -240,7 +240,7 @@ function copyRandomList(list){
     let randomPointers = nodeList.copyRandomList();
 }
 
-addTwoNumbers([9,9,9,9,9,9,9], [9,9,9,9]);
+//addTwoNumbers([9,9,9,9,9,9,9], [9,9,9,9]);
 function addTwoNumbers(l1, l2){
     let list1 = new CreateLinkedList();
     list1.addArray(l1);
@@ -252,7 +252,7 @@ function addTwoNumbers(l1, l2){
     cc(newList.addTwoNumbers(list1, list2));
 }
 
-findDuplicate([1,2,3,4,5,2])
+//findDuplicate([1,2,3,4,5,2])
 function findDuplicate(nums){
     let nodes = new CreateLinkedList();
     nodes.addArray(nums);
