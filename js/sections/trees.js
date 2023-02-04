@@ -105,13 +105,33 @@ class BST{
         if (counterL-counterR < 2 || counterR-counterL < 2) result.balanced = false;
         return 1;
     }
+
+    isSameTree(tree1, tree2){
+        let result = {same: true};
+        this.isSameTreeRecursion(tree1, tree2, result);
+        return result.same;
+    }
+
+    isSameTreeRecursion(tree1, tree2, result){
+        if (!tree1 && !tree2) return;
+        if ((!tree1 && tree2) || (tree1 && !tree2)) { result.same = false; return; }
+        if (tree1.data !== tree2.data){ result.same = false; return; }
+        this.isSameTreeRecursion(tree1.left, tree2.left, result);
+        this.isSameTreeRecursion(tree1.right, tree2.right, result);
+    }
 }
 
 let tree = new BST;
 tree.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
-tree.invertTree();
+//tree.invertTree();
 //cc(tree.getDepth());
 //cc(tree.getDiameter())
-cc(tree.isBalanced());
+//cc(tree.isBalanced());
+//cc(tree);
 
-cc(tree);
+let tree2 = new BST;
+tree2.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
+
+let tree3 = new BST;
+cc(tree3.isSameTree(tree.root, tree2.root));
+
