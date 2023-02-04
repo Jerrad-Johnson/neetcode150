@@ -134,6 +134,34 @@ class BST{
         this.findHeadOfValueRecursion(tree.left, value, head);
         this.findHeadOfValueRecursion(tree.right, value, head);
     }
+
+    levelOrder(){
+        if (!tree) return [];
+        let values = [[this.root.data]]
+        let head = this.root;
+        this.levelOrderRecursion(values, head);
+        return values;
+    }
+
+    levelOrderRecursion(values, head){
+        if (!head) return;
+        let leftValue = getValue(head.left?.data);
+        let rightValue = getValue(head.right?.data);
+
+        function getValue(data){
+            if (data === 0){
+                return 0;
+            } else if (data === null || data === undefined) {
+                return null;
+            } else {
+                return data;
+            }
+        }
+
+        values.push([leftValue, rightValue]);
+        this.levelOrderRecursion(values, head.left);
+        this.levelOrderRecursion(values, head.right);
+    }
 }
 
 let tree = new BST;
@@ -143,6 +171,7 @@ tree.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
 //cc(tree.getDiameter())
 //cc(tree.isBalanced());
 //cc(tree);
+cc(tree.levelOrder());
 
 let tree2 = new BST;
 tree2.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
