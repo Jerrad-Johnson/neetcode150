@@ -162,6 +162,20 @@ class BST{
         this.levelOrderRecursion(values, head.left);
         this.levelOrderRecursion(values, head.right);
     }
+
+    rightSideView(){
+        let head = this.root;
+        if (!head.data) return [];
+        let values = [head.data];
+
+        while (head.right){
+            head = head.right;
+            values.push(head.data);
+        }
+
+        return values;
+    }
+
 }
 
 let tree = new BST;
@@ -171,7 +185,9 @@ tree.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
 //cc(tree.getDiameter())
 //cc(tree.isBalanced());
 //cc(tree);
-cc(tree.levelOrder());
+//cc(tree.levelOrder());
+cc(tree.rightSideView());
+cc(tree);
 
 let tree2 = new BST;
 tree2.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
