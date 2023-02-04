@@ -119,6 +119,21 @@ class BST{
         this.isSameTreeRecursion(tree1.left, tree2.left, result);
         this.isSameTreeRecursion(tree1.right, tree2.right, result);
     }
+
+    isSubtree(tree1, tree2){
+        let head = {};
+        this.findHeadOfValueRecursion(tree1.root, tree2.root.data, head);
+        if (!head) return false;
+        cc(head.node, tree2.root);
+        cc(this.isSameTree(head.node, tree2.root));
+    }
+
+    findHeadOfValueRecursion(tree, value, head){
+        if (!tree) return;
+        if (tree.data === value){ head.node = tree; return }
+        this.findHeadOfValueRecursion(tree.left, value, head);
+        this.findHeadOfValueRecursion(tree.right, value, head);
+    }
 }
 
 let tree = new BST;
@@ -131,7 +146,14 @@ tree.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
 
 let tree2 = new BST;
 tree2.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
-
 let tree3 = new BST;
-cc(tree3.isSameTree(tree.root, tree2.root));
+//cc(tree3.isSameTree(tree.root, tree2.root));
+
+let tree4 = new BST;
+tree4.addArr([9,1,5,2]);
+let tree5 = new BST;
+tree5.addArr([1,5,2]);
+
+cc(tree5.isSubtree(tree4, tree5));
+
 
