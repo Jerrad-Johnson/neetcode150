@@ -69,12 +69,26 @@ class BST{
 
     getDepthRecursion(root){
         if (!root) return 0;
-
         return 1 + Math.max(this.getDepthRecursion(root.left, root.right));
+    }
+
+    getDiameter(){
+        let root = this.root;
+        let left = this.getDepthSingleSide(root, "left");
+        let right = this.getDepthSingleSide(root, "right");
+        return left+right;
+    }
+
+    getDepthSingleSide(root, side){
+        if (!root) return 0;
+        if (side === "left") root = root.left;
+        if (side === "right") root = root.right
+        return 1 + this.getDepthSingleSide(root, side)
     }
 }
 
 let tree = new BST;
 tree.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
 tree.invertTree();
-cc(tree.getDepth());
+//cc(tree.getDepth());
+cc(tree.getDiameter())
