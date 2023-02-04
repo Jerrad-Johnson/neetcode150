@@ -85,10 +85,33 @@ class BST{
         if (side === "right") root = root.right
         return 1 + this.getDepthSingleSide(root, side)
     }
+
+    isBalanced(){
+        let root = this.root;
+        let counterL = 0, counterR = 0;
+        let result = {balanced: true};
+        counterL = this.isBalancedRecursion(root, result);
+        counterR = this.isBalancedRecursion(root, result);
+        if (counterL-counterR < 2 || counterR-counterL < 2) result.balanced = false;
+        return result.balanced;
+    }
+
+    isBalancedRecursion(root, result){
+        if (!root) return;
+        let counterL = 0, counterR = 0;
+        counterL = 1+this.isBalancedRecursion(root.left, result)
+        counterR = 1+this.isBalancedRecursion(root.right, result);
+
+        if (counterL-counterR < 2 || counterR-counterL < 2) result.balanced = false;
+        return 1;
+    }
 }
 
 let tree = new BST;
 tree.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
 tree.invertTree();
 //cc(tree.getDepth());
-cc(tree.getDiameter())
+//cc(tree.getDiameter())
+cc(tree.isBalanced());
+
+cc(tree);
