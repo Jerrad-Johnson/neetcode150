@@ -7,6 +7,7 @@ class Node{
     }
 }
 
+// Class is broken, it creates null nodes *which have their own children*
 class BST{
     constructor(){
         this.root = null;
@@ -124,8 +125,7 @@ class BST{
         let head = {};
         this.findHeadOfValueRecursion(tree1.root, tree2.root.data, head);
         if (!head) return false;
-        cc(head.node, tree2.root);
-        cc(this.isSameTree(head.node, tree2.root));
+        return this.isSameTree(head.node, tree2.root);
     }
 
     findHeadOfValueRecursion(tree, value, head){
@@ -154,6 +154,5 @@ tree4.addArr([9,1,5,2]);
 let tree5 = new BST;
 tree5.addArr([1,5,2]);
 
-cc(tree5.isSubtree(tree4, tree5));
 
 
