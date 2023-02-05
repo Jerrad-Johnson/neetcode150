@@ -10,7 +10,7 @@ class Trie{
         this.root = {};
     }
 
-    addWord(word){
+    insert(word){
         let head = this.root;
         this.recursiveAddWord(word, head, 0);
     }
@@ -34,9 +34,22 @@ class Trie{
 
         this.recursiveAddWord(word, head, iteration);
     }
+
+    search(word){
+        let head = this.root;
+        for (let entry of word){
+            if (head[entry]){
+                head = head[entry];
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 
 let x = new Trie();
-x.addWord(["a", "b"]);
-cc(x);
+x.insert(["a", "b"]);
+cc(x.search("ab"))
+cc(x.search("ccc"))
