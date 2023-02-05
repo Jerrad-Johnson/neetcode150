@@ -72,6 +72,7 @@ class MinHeap{
     }
 
     leastInterval(){ // This does not meet the requirement that there is always X units of time between element Y. Simply misread that one requirement, but appears to work otherwise.
+                            // ... May now meet that requirement, did not do enough tests to confirm.
         let time = 0;
         let limiter = 0;
         let used = [];
@@ -99,7 +100,7 @@ class MinHeap{
                 }
 
                 if (i === this.heap.length-1 && used.length < this.k){
-                    for (let j = used.length; j < this.k; j++){
+                    for (let j = used.length; j < this.k+1; j++){
                         time++;
                     }
                     used = [];
