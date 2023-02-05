@@ -26,9 +26,7 @@ class MinHeap{
     }
 
     lastStoneWeight(){
-        let limiter = 0;
         while (this.heap.length > 1){
-            limiter++; if (limiter === 50) return;
             this.heap.sort();
             let length = this.heap.length;
             let remainder = this.heap[length-1] - this.heap[length-2];
