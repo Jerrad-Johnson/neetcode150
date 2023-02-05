@@ -1,30 +1,31 @@
 function numIslands(grid){
     let map = {};
     let islands = 0;
-    let limiter = 0;
 
     for (let v = 0; v < grid.length; v++){
         for (let h = 0; h < grid[v].length; h++){
             if ((grid[v][h] === "1") && (map[`${v}${h}`] === undefined)){
                 islands++;
-                map[`${v}${h}`] = 1;
-                markVisited(v, h);
+                findAdjacent(v, h);
             }
         }
     }
-    function markVisited(v, h){
-        limiter++; if (limiter === 200) return;
-        let negativeV = v--,
-            positiveV = v++,
-            negativeH = h--,
-            positiveH = h++;
 
+    return islands;
 
-        if ((negativeV >= 0) && (map[`${negativeV}${h}`] !== undefined) && (grid[negativeV][h] === "1")){
-            map[`${negativeV}${h}`] = 1;
-            markVisited(negativeV, h);
-        }
+    function findAdjacent(v, h){
+        if (map[`${v}${h}`] === 1) return;
+        map[`${v}${h}`] = 1;
 
+        let negativeV = v-1,
+            positiveV = v+1,
+            negativeH = h-1,
+            positiveH = h+1;
+
+        if ((negativeV >= 0) && (map[`${negativeV}${h}`] === undefined) && (grid[negativeV][h] === "1")) findAdjacent(negativeV, h);
+        if ((positiveV <= grid.length-1) && (map[`${positiveV}${h}`] === undefined) && (grid[positiveV][h] === "1")) findAdjacent(positiveV, h);
+        if ((negativeH <= 0) && (map[`${v}${negativeH}`] === undefined) && (grid[v][negativeH] === "1"))  findAdjacent(v, negativeH);
+        if ((positiveH <= grid[v].length-1) && (map[`${v}${positiveH}`] === undefined) && (grid[v][positiveH] === "1")) findAdjacent(v, positiveH);
     }
 }
 
