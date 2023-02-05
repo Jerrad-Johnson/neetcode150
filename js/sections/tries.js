@@ -44,12 +44,27 @@ class Trie{
                 return false;
             }
         }
+        if (head.endOfWord === true) return true;
+        return false;
+    }
+
+    startsWith(fragment){
+        let head = this.root;
+        for (let entry of fragment){
+            if (head[entry]){
+                head = head[entry];
+            } else {
+                return false;
+            }
+        }
         return true;
     }
 }
 
 
 let x = new Trie();
-x.insert(["a", "b"]);
-cc(x.search("ab"))
-cc(x.search("ccc"))
+x.insert(["a", "b", "c"]);
+//cc(x.search("ab"))
+//cc(x.search("ccc"))
+
+cc(x.startsWith("ad"));
