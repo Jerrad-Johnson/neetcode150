@@ -186,8 +186,8 @@ tree.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
 //cc(tree.isBalanced());
 //cc(tree);
 //cc(tree.levelOrder());
-cc(tree.rightSideView());
-cc(tree);
+//cc(tree.rightSideView());
+//cc(tree);
 
 let tree2 = new BST;
 tree2.addArr([1,5,2,7,4,1,6,8,32,2,15,5,0]);
