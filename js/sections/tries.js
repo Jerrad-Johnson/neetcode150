@@ -74,7 +74,6 @@ class WordDictionary{
         if (this.dictionary[word]) return true;
         return false;
     }
-
 }
 
 
