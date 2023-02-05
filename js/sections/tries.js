@@ -61,10 +61,30 @@ class Trie{
     }
 }
 
+class WordDictionary{
+    constructor() {
+        this.dictionary = {};
+    }
+
+    addWord(word){
+        this.dictionary[word] = 1;
+    }
+
+    search(word){
+        if (this.dictionary[word]) return true;
+        return false;
+    }
+
+}
+
 
 let x = new Trie();
 x.insert(["a", "b", "c"]);
 //cc(x.search("ab"))
 //cc(x.search("ccc"))
+//cc(x.startsWith("ad"));
 
-cc(x.startsWith("ad"));
+
+let y = new WordDictionary;
+y.addWord(".a.")
+cc(y.search(".a"));
