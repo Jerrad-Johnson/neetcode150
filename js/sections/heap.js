@@ -42,6 +42,27 @@ class MinHeap{
 
         return this.heap;
     }
+
+    kClosest(entries){
+        for (let entry of entries){
+            let value = (Math.sqrt(Math.pow((entry[0] - 0), 2) + Math.pow((entry[1] - 0), 2)));
+            this.heap.push({val: value, input: entry});
+        }
+
+        this.heap.sort((a, b) => b.val - a.val);
+
+        while (this.heap.length > this.k){
+            this.heap.shift();
+        }
+
+        let result = [];
+
+        for (let entry of this.heap){
+            result.push(entry.input);
+        }
+
+        return result;
+    }
 }
 
 let x = new MinHeap(3);
@@ -51,5 +72,7 @@ x.add(5);
 
 let stones = new MinHeap();
 stones.add([2,7,4,1,8,1]);
-cc(stones.lastStoneWeight());
+//cc(stones.lastStoneWeight());
 
+let closest = new MinHeap(2);
+//cc(closest.kClosest([[3,3],[5,-1],[-2,4]]));
