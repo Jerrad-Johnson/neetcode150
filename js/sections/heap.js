@@ -25,6 +25,13 @@ class MinHeap{
         return this.heap[0];
     }
 
+    addV2(entries){
+        for (let entry of entries) {
+            this.heap.push(entry);
+        }
+        this.heap.sort();
+    }
+
     lastStoneWeight(){
         while (this.heap.length > 1){
             this.heap.sort();
@@ -45,7 +52,7 @@ class MinHeap{
 
     kClosest(entries){
         for (let entry of entries){
-            let value = (Math.sqrt(Math.pow((entry[0] - 0), 2) + Math.pow((entry[1] - 0), 2)));
+            let value = Math.sqrt(Math.pow((entry[0] - 0), 2) + Math.pow((entry[1] - 0), 2));
             this.heap.push({val: value, input: entry});
         }
 
@@ -63,6 +70,44 @@ class MinHeap{
 
         return result;
     }
+
+    leastInterval(){ // This does not meet the requirement that there is always X units of time between element Y. Simply misread that one requirement, but appears to work otherwise.
+        let time = 0;
+        let limiter = 0;
+        let used = [];
+
+        while (this.heap.length > 0){
+            limiter++; if (limiter === 50) break;
+
+            for (let i = 0; i < this.heap.length; i++){
+                if (used.length === 0){
+                    used.push(this.heap[0]);
+                    this.heap.splice(0, 1);
+                    time++;
+                    break;
+                }
+
+                if (used.length === this.k){
+                    used = [];
+                    break;
+                }
+
+                if (used.find((e) => e === this.heap[i]) === undefined){
+                    used.push(this.heap[i]);
+                    this.heap.splice(i, 1);
+                    time++;
+                }
+
+                if (i === this.heap.length-1 && used.length < this.k){
+                    for (let j = used.length; j < this.k; j++){
+                        time++;
+                    }
+                    used = [];
+                }
+            }
+        }
+        return time;
+    }
 }
 
 let x = new MinHeap(3);
@@ -76,3 +121,7 @@ stones.add([2,7,4,1,8,1]);
 
 let closest = new MinHeap(2);
 //cc(closest.kClosest([[3,3],[5,-1],[-2,4]]));
+
+let interval = new MinHeap(2);
+interval.addV2(["A","A","A","B","B","B","B","B"]);
+cc(interval.leastInterval());
