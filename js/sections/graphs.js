@@ -68,19 +68,37 @@ function maxAreaOfIsland(grid){
 function pacificAtlantic(height){
     let possibiltiies = [];
     let paths = {pacific: false, atlantic: false};
+    let visited = {};
 
     for (let v = 0; v < height.length; v++){
         for (let h = 0; h < height[v].length; h++){
-                findPaths(v, h);
-                if (paths.pacific === true && paths.atlantic === true) possibiltiies.push([v, h]);
-                paths = {};
-            }
+            findPaths(v, h);
+            if (paths.pacific === true && paths.atlantic === true) possibiltiies.push([v, h]);
+            paths = {pacific: false, atlantic: false};
+            visited = {};
         }
+    }
+
+    return possibiltiies;
 
     function findPaths(v, h) {
-        let thisHeight = height[v][h];
+        if (visited[`${v}${h}`] === 1) return;
+        visited[`${v}${h}`] = 1;
 
+        let negativeV = v-1,
+            positiveV = v+1,
+            negativeH = h-1,
+            positiveH = h+1,
+            thisHeight = height[v][h];
 
+        if (v === 0 || h === 0) paths.pacific = true;
+        if ((v === height.length-1) || (h === height[v].length-1)) paths.atlantic = true;
+        if (paths.pacific === true && paths.atlantic === true) return;
+
+        if ((negativeV >= 0) && (visited[`${negativeV}${h}`] === undefined) && (height[negativeV][h] <= thisHeight)) findPaths(negativeV, h);
+        if ((positiveV <= height.length-1) && (visited[`${positiveV}${h}`] === undefined) && (height[positiveV][h] <= thisHeight)) findPaths(positiveV, h);
+        if ((negativeH >= 0) && (visited[`${v}${negativeH}`] === undefined) && (height[v][negativeH] <= thisHeight))  findPaths(v, negativeH);
+        if ((positiveH <= height[v].length-1) && (visited[`${v}${positiveH}`] === undefined) && (height[v][positiveH] <= thisHeight)) findPaths(v, positiveH);
     }
 }
 
