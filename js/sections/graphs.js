@@ -102,6 +102,86 @@ function pacificAtlantic(height){
     }
 }
 
+function orangesRotting(board){
+    let rots = []; getInitialRots();
+
+    let changed = false;
+    let time = -1;
+    let limiter = 0;
+
+    do {
+        limiter++;
+        changed = addRots();
+    } while ((changed === true) && (limiter < 5));
+
+    let anyHealthy = findHealthy();
+
+    if (anyHealthy === false) return time;
+    return -1;
+
+    function getInitialRots(){
+        for (let v = 0; v < board.length; v++) {
+            for (let h = 0; h < board[v].length; h++) {
+                if (board[v][h] === 2) {
+                    rots.push([v, h]);
+                }
+            }
+        }
+    }
+
+    function addRots(){
+        let change = false;
+        let rotsCopy = [...rots];
+        time++;
+
+        for (let entry of rotsCopy){
+            let v = entry[0],
+                h = entry[1],
+                negativeV = v-1,
+                positiveV = v+1,
+                negativeH = h-1,
+                positiveH = h+1;
+
+            if ((positiveH <= board[v].length-1) && (board[v][positiveH] === 1)){
+                board[v][positiveH] = 2;
+                rots.push([v, positiveH]);
+                change = true;
+            }
+            if ((positiveV <= board.length-1) && (board[positiveV][h] === 1)){
+                board[positiveV][h] = 2;
+                rots.push([positiveV, h]);
+                change = true;
+            }
+            if ((negativeV >= 0) && (board[negativeV][h] === 1)){
+                board[negativeV][h] = 2;
+                rots.push([negativeV, h]);
+                change = true;
+            }
+            if ((negativeH >= 0) && (board[v][negativeH] === 1)){
+                board[v][negativeH] = 2;
+                rots.push([v, negativeH]);
+                change = true;
+            }
+        }
+
+        return change;
+    }
+
+    function findHealthy(){
+        for (let v = 0; v < board.length; v++) {
+            for (let h = 0; h < board[v].length; h++) {
+                if (board[v][h] === 1) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+}
+
+
+
 
 /*cc(numIslands([
     ["1","1","0","0","0"],
@@ -110,7 +190,6 @@ function pacificAtlantic(height){
     ["0","0","0","1","1"]
 ]));*/
 
-
 //cc(maxAreaOfIsland([[0,0,1,0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,1,1,0,1,0,0,0,0,0,0,0,0],[0,1,0,0,1,1,0,0,1,0,1,0,0],[0,1,0,0,1,1,0,0,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,0,1,1,0,0,0,0]]))
-
-cc(pacificAtlantic( [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]));
+//cc(pacificAtlantic( [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]));
+cc(orangesRotting([[2,1,1],[1,1,0],[0,1,1]]));
