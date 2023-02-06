@@ -104,20 +104,18 @@ function pacificAtlantic(height){
 
 function orangesRotting(board){
     let rots = []; getInitialRots();
-
-    let changed = false;
-    let time = -1;
-    let limiter = 0;
+    let changed = false,
+        time = -1;
 
     do {
-        limiter++;
         changed = addRots();
-    } while ((changed === true) && (limiter < 5));
+    } while (changed === true);
 
-    let anyHealthy = findHealthy();
+    const anyHealthy = findHealthy();
 
     if (anyHealthy === false) return time;
     return -1;
+
 
     function getInitialRots(){
         for (let v = 0; v < board.length; v++) {
