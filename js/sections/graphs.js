@@ -65,13 +65,34 @@ function maxAreaOfIsland(grid){
     }
 }
 
+function pacificAtlantic(height){
+    let possibiltiies = [];
+    let paths = {pacific: false, atlantic: false};
 
-cc(numIslands([
+    for (let v = 0; v < height.length; v++){
+        for (let h = 0; h < height[v].length; h++){
+                findPaths(v, h);
+                if (paths.pacific === true && paths.atlantic === true) possibiltiies.push([v, h]);
+                paths = {};
+            }
+        }
+
+    function findPaths(v, h) {
+        let thisHeight = height[v][h];
+
+
+    }
+}
+
+
+/*cc(numIslands([
     ["1","1","0","0","0"],
     ["1","1","0","0","0"],
     ["0","0","1","0","0"],
     ["0","0","0","1","1"]
-]));
+]));*/
 
 
-cc(maxAreaOfIsland([[0,0,1,0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,1,1,0,1,0,0,0,0,0,0,0,0],[0,1,0,0,1,1,0,0,1,0,1,0,0],[0,1,0,0,1,1,0,0,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,0,1,1,0,0,0,0]]))
+//cc(maxAreaOfIsland([[0,0,1,0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,1,1,0,1,0,0,0,0,0,0,0,0],[0,1,0,0,1,1,0,0,1,0,1,0,0],[0,1,0,0,1,1,0,0,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,0,1,1,0,0,0,0]]))
+
+cc(pacificAtlantic( [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]));
