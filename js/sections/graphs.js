@@ -178,6 +178,46 @@ function orangesRotting(board){
     }
 }
 
+// Copy of https://leetcode.com/problems/course-schedule/solutions/383060/JavaScript-DFS-solution-with-comments/
+function canFinish(numCourses, prerequisites) {
+    const visited = new Set();
+    const visiting = new Set();
+
+    const prereqCourseArr = [...new Array(numCourses)].map(() => []);
+
+    prerequisites.forEach(([course, prereq]) => {
+        prereqCourseArr[prereq].push(course);
+    });
+
+    for (let course = 0 ; course < numCourses; course++) {
+        if (!dfs(course)) return false;
+    };
+
+    return true;
+
+    function dfs(course) {
+        if (visited.has(course)) {
+            return true;
+        }
+
+        if (visiting.has(course)) {
+            return false;
+        }
+
+        visiting.add(course);
+
+        const coursesDependingOnThis = prereqCourseArr[course];
+        for (let i = 0; i < coursesDependingOnThis.length; i++) {
+            const courseDependingOnThis = coursesDependingOnThis[i];
+            if (!dfs(courseDependingOnThis)) return false;
+        }
+
+        visiting.delete(course);
+        visited.add(course);
+        return true;
+    };
+}
+
 
 
 
@@ -191,3 +231,4 @@ function orangesRotting(board){
 //cc(maxAreaOfIsland([[0,0,1,0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,1,1,0,1,0,0,0,0,0,0,0,0],[0,1,0,0,1,1,0,0,1,0,1,0,0],[0,1,0,0,1,1,0,0,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,0,1,1,0,0,0,0]]))
 //cc(pacificAtlantic( [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]));
 //cc(orangesRotting([[2,1,1],[1,1,0],[0,1,1]]));
+//cc(canFinish(3, [[1,0],[2,0], [1,2]]))

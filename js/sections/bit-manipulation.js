@@ -19,4 +19,4 @@ function hammingWeight(num){
     return res;
 }
 
-cc(hammingWeight(0000000011001111));
+//cc(hammingWeight(0000000011001111));
