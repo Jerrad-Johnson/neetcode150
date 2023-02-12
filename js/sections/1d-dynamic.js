@@ -32,7 +32,63 @@ function minCostClimbingStairs(arr){ // Basically works, but I slightly misunder
     return min;
 }
 
+function longestPalindrome(s){ // Mostly works, but doesn't get all even-length cases. Next solution does.
+    let arr = s.split("");
+    let best = [];
+
+    for (let i = 0; i < arr.length; i++){
+        let curr = [arr[i]];
+        let l = i-1;
+        let r = i+1;
+        while (arr[l] === arr[r] && arr[l] !== undefined && arr[r] !== undefined){
+            if (arr[l] === arr[r]){
+                curr.push(arr[r]);
+                curr.unshift(arr[l]);
+            }
+            l--;
+            r++;
+        }
+        if (curr.length > best.length) best = curr;
+    }
+
+    if (best.length < 3){
+        for (let i = 1; i < arr.length; i++){
+            if (arr[i] === arr[i-1]){
+                best = [arr[i-1], arr[i]];
+            }
+        }
+    }
+
+    return best.join("");
+}
+
+function countSubstrings(s){
+    let arr = s.split("");
+    let results = [];
+
+    for (let i = 0; i < arr.length; i++){
+        let l = i,
+            r = i;
+
+        while (arr[l] === arr[r] && arr[l] !== undefined && arr[r] !== undefined){
+            results.push(arr.slice(l, r+1).join(""));
+            l--; r++;
+        }
+
+        l = i;
+        r = i+1;
+
+        while (arr[l] === arr[r] && arr[l] !== undefined && arr[r] !== undefined){
+            results.push(arr.slice(l, r+1).join(""));
+            l--; r++;
+        }
+    }
+
+    return results;
+}
+
 //cc(climbStairs(12))
 //cc(minCostClimbingStairs([1,100,1,1,1,100,1,1,100,1]))
 //cc(minCostClimbingStairs([10,15,20]))
-
+//cc(longestPalindrome("bbd"));
+cc(countSubstrings("aaa"));
