@@ -88,16 +88,12 @@ function countSubstrings(s){
 }
 
 function decodeWays(nums){
-    let arr = String(nums).split("");
-    arr = arr.map((e) => Number(e));
+    let arr = String(nums).split("").map((e) => Number(e));
     let combinations = 0;
 
     for (let i = 0; i < arr.length; i++){
-        if (arr[i] !== 0) {
-            combinations++;
-        } if ((arr[i] === 1) || (arr[i] === 2) && (i < arr.length)){
-            combinations++;
-        }
+        if (arr[i] !== 0) combinations++;
+        if ((arr[i] === 1) || (arr[i] === 2) && (i < arr.length)) combinations++;
     }
 
     return combinations;
