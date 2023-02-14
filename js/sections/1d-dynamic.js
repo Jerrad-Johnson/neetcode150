@@ -84,11 +84,29 @@ function countSubstrings(s){
         }
     }
 
-    return results;
+    return results.length;
+}
+
+function decodeWays(nums){
+    let arr = String(nums).split("");
+    arr = arr.map((e) => Number(e));
+    let combinations = 0;
+
+    for (let i = 0; i < arr.length; i++){
+        if (arr[i] !== 0) {
+            combinations++;
+        } if ((arr[i] === 1) || (arr[i] === 2) && (i < arr.length)){
+            combinations++;
+        }
+    }
+
+    return combinations;
 }
 
 //cc(climbStairs(12))
 //cc(minCostClimbingStairs([1,100,1,1,1,100,1,1,100,1]))
 //cc(minCostClimbingStairs([10,15,20]))
 //cc(longestPalindrome("bbd"));
-cc(countSubstrings("aaa"));
+//cc(countSubstrings("aaa"));
+
+cc(decodeWays(1221))
