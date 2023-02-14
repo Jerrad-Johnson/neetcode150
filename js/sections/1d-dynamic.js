@@ -99,10 +99,32 @@ function decodeWays(nums){
     return combinations;
 }
 
+/*function coinChange(coins, amount){ // Fails test cases.
+    if (amount === 0) return 0;
+
+    coins.sort((a, b) => a - b);
+
+    let count = 0;
+    while (amount > 0 && coins.length > 0){
+        if ((amount - coins[coins.length-1]) > -1){
+            amount = amount - coins[coins.length-1];
+            count++;
+        } else {
+            coins.splice(coins.length-1);
+        }
+    }
+
+    return amount === 0 ? count : -1;
+}*/
+
+function coinChange(coins, amount){
+
+}
+
 //cc(climbStairs(12))
 //cc(minCostClimbingStairs([1,100,1,1,1,100,1,1,100,1]))
 //cc(minCostClimbingStairs([10,15,20]))
 //cc(longestPalindrome("bbd"));
 //cc(countSubstrings("aaa"));
-
-cc(decodeWays(1221))
+//cc(decodeWays(12210)) // Note: Does not handle inputs with leading zeros due to JS behavior. Would need to check for that.
+//cc(coinChange([186,419,83,408], 27))
