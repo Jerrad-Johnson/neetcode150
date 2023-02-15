@@ -117,9 +117,40 @@ function decodeWays(nums){
     return amount === 0 ? count : -1;
 }*/
 
-function coinChange(coins, amount){
+/*function coinChange(coins, amount){ // Failed attempt at backtracking. It will always use at least one of the largest coin, assuming it fits within the initial limit.
+    if (amount === 0) return 0;
+    coins.sort((a, b) => a - b);
+    let found = {state: false, count: 0};
+    let count = 0;
 
-}
+    backtrack(count, amount, coins);
+
+    function backtrack(count, amount, coins){
+        coins = [...coins];
+
+        if (found.state === true) return true;
+        if (amount === 0) {
+            found.state = true;
+            found.count = count;
+            return;
+        }
+
+        if (coins.length === 0) return;
+
+        if ((amount - coins[coins.length-1]) > -1) {
+            amount = amount - coins[coins.length - 1];
+            count++;
+            if (backtrack(count, amount, coins) === true) return true;
+        }
+
+        if (found.state === false){
+            coins.splice(coins.length-1);
+            backtrack(count, amount, coins)
+        }
+    }
+
+    return found.state === true ? found.count : -1;
+}*/
 
 //cc(climbStairs(12))
 //cc(minCostClimbingStairs([1,100,1,1,1,100,1,1,100,1]))
@@ -127,4 +158,4 @@ function coinChange(coins, amount){
 //cc(longestPalindrome("bbd"));
 //cc(countSubstrings("aaa"));
 //cc(decodeWays(12210)) // Note: Does not handle inputs with leading zeros due to JS behavior. Would need to check for that.
-//cc(coinChange([186,419,83,408], 27))
+cc(coinChange([186,419,83,408], 6249))
